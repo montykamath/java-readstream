@@ -1,4 +1,4 @@
-package com.goodstart.parsing;
+package com.goodstart.streams;
 
 import java.io.IOException;
 import java.io.Reader;
