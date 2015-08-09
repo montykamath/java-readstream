@@ -4,46 +4,37 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 
-public class ReadStream
-{
+public class ReadStream {
 	private final Reader reader;
 	private boolean hasReadFirstChar = false;
 	private Character nextChar;
 
-	public ReadStream(Reader reader)
-	{
+	public ReadStream(Reader reader) {
 		this.reader = reader;
 	}
 
-	public ReadStream(String aString)
-	{
+	public ReadStream(String aString) {
 		this.reader = new StringReader(aString);
 	}
 
-	public boolean atEnd() throws IOException
-	{
-		try
-		{
+	public boolean atEnd() throws IOException {
+		try {
 			this.peek();
-		} catch (EndOfStreamException ex)
-		{
+		} catch (EndOfStreamException ex) {
 			return true;
 		}
 		return false;
 	}
 
-	private Character getNextFromReader() throws IOException
-	{
+	private Character getNextFromReader() throws IOException {
 		int result = reader.read();
-		if (-1 == result)
-		{
+		if (-1 == result) {
 			return null;
 		}
 		return (char) result;
 	}
 
-	public char next() throws IOException
-	{
+	public char next() throws IOException {
 		this.readFirstCharIfNeeded();
 		Character retVal = this.nextChar;
 		if (this.nextChar == null)
@@ -52,51 +43,40 @@ public class ReadStream
 		return retVal;
 	}
 
-	public char peek() throws IOException
-	{
+	public char peek() throws IOException {
 		this.readFirstCharIfNeeded();
 		if (this.nextChar == null)
 			throw new EndOfStreamException();
 		return this.nextChar;
 	}
 
-	private void readFirstCharIfNeeded() throws IOException
-	{
-		if (!this.hasReadFirstChar)
-		{
+	private void readFirstCharIfNeeded() throws IOException {
+		if (!this.hasReadFirstChar) {
 			this.nextChar = this.getNextFromReader();
 			this.hasReadFirstChar = true;
 		}
 	}
 
-	public String upTo(char aCharacter) throws IOException
-	{
+	public String upTo(char aCharacter) throws IOException {
 		StringBuilder builder = new StringBuilder();
-		try
-		{
+		try {
 			char nextChar = next();
-			while (nextChar != aCharacter)
-			{
+			while (nextChar != aCharacter) {
 				builder.append(nextChar);
 				nextChar = next();
 			}
-		} catch (EndOfStreamException ex)
-		{
+		} catch (EndOfStreamException ex) {
 		}
 		return builder.toString();
 	}
 
-	public String upToEnd() throws IOException
-	{
+	public String upToEnd() throws IOException {
 		StringBuilder builder = new StringBuilder();
-		try
-		{
-			while (true)
-			{
+		try {
+			while (true) {
 				builder.append(next());
 			}
-		} catch (EndOfStreamException ex)
-		{
+		} catch (EndOfStreamException ex) {
 		}
 		return builder.toString();
 	}
