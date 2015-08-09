@@ -1,7 +1,5 @@
 package com.goodstart.streams;
 
-import static org.junit.Assert.*;
-
 import java.io.IOException;
 
 import org.junit.After;
